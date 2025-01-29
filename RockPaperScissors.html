@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors</title>
+    <style>
+        body{
+           height:100vh;
+            width:100vw;
+            padding:0;
+            margin:0;
+            color:navy;
+            display:flex;
+        }
+        .dbody{
+            margin:auto;
+            display:flex;
+            flex-direction: column;
+            align-items:center;
+            justify-content:space-between;
+            text-align: center;
+            width:360px;
+            height:720px;
+            background-image: url("https://image.freepik.com/free-vector/hand-drawn-rock-paper-scissor-seamless-pattern_21595-4.jpg");
+            
+            
+            
+            border:1px solid black;
+        }
+        input{
+            padding:15px;
+            border: 5px solid navy;
+            background-color: grey;
+            text-align: center;
+            margin:5px;
+            border-radius: 30%;
+            font-size: 15px;
+            color:white;
+            font-weight: bold;
+        }
+       
+        .result{
+            text-align: center;
+            font-size: 40px;
+            font-style: italic;
+            font-weight: bold;     
+            color:navy;  
+            border-radius: 50%;
+            padding:15px;
+            background-color: azure;
+            margin-bottom: 0;
+            margin-top: 0;
+         }
+        
+            .card{
+            padding:10px;
+            
+            background-color: navy;
+            text-align: center;
+            margin:10px;
+            border-radius: 50%;
+            padding:20px;
+            color:white;
+            font-size:50px;
+            }
+         .score{
+            display:flex;
+            justify-content: space-between;
+            width:90%;
+            padding:5%;
+         }
+        .hide{
+            display:none;
+        }
+        #cr,#ur{
+            font-size:150px;
+        }
+        #cr{
+            rotate: 180deg;
+        }
+        #match,#score{
+            font-weight: bolder;
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="dbody" id="myDiv" >
+        <div class="score">
+            <h2>Match: <span id="match"></span></h2>
+            <h2>Score: <span id="score"></span></h2>
+        </div>
+    <div>
+    <h1 class="result" id="result">Lets Play</h1>
+    </div>
+
+        <div class="ur"><i id="cr" class="fa-solid fa-shake"></i></div>
+        <div class="ur"><i id="ur" class="fa-solid fa-shake"></i></div>
+        <input type="text" id="compres" placeholder="Computer" class="hide">
+        <input type="text" id="userres" placeholder="Player" class="hide">
+
+    
+
+    <div style="display: flex;">
+        <div class="card" id="id1"><i class="fa-solid fa-hand-back-fist"></i></div>
+        <div class="card" id="id2"><i class="fa-regular fa-hand"></i></div>
+        <div class="card" id="id3"> <i class="fa-regular fa-hand-scissors"></i></div>    
+    </div>
+    <div >
+        
+    </div>
+    </div>
+    <script>
+        var matchCount=0;
+        var match= document.getElementById("match");
+        match.innerHTML = matchCount;
+
+        var scoreCount=0;
+        var score= document.getElementById("score");
+        score.innerHTML = scoreCount;
+
+        var drawMatchSound = new Audio("https://assets.mixkit.co/active_storage/sfx/932/932-preview.mp3");
+        var cheerSound = new Audio("https://assets.mixkit.co/active_storage/sfx/2257/2257-preview.mp3");
+        var loseSound = new Audio("https://assets.mixkit.co/active_storage/sfx/343/343-preview.mp3");
+
+        
+
+        function check(){
+            var comp=0;
+            
+            comp= Math.floor((Math.random()*3)+1);
+            //  console.log(answer);
+            var user= document.getElementById("userres").value;
+            
+            console.log(user);
+            switch(comp){
+            case 1:
+            document.getElementById("compres").value="Rock";
+            document.getElementById("cr").classList.add("fa-hand-back-fist");
+            document.getElementById("cr").classList.remove("fa-hand","fa-hand-peace");
+            break;
+            case 2:
+            document.getElementById("compres").value="Paper";
+            document.getElementById("cr").classList.add("fa-hand");
+            document.getElementById("cr").classList.remove("fa-hand-back-fist","fa-hand-peace");
+            break;
+            case 3:
+            document.getElementById("compres").value="Scissor";
+            document.getElementById("cr").classList.add("fa-hand-peace");
+            document.getElementById("cr").classList.remove("fa-hand-back-fist","fa-hand");
+            break;
+            }
+
+
+            if(comp == user){
+                document.getElementById("result").innerHTML="Match Draw";
+                drawMatchSound.play();
+            }
+
+            if(user == 1){
+                if(comp == 2){
+                 document.getElementById("result").innerHTML="You Lose!!";
+                 loseSound.play();
+                }
+                else if (comp == 3){
+                document.getElementById("result").innerHTML="You Win!";
+                cheerSound.play();
+                scoreCount++;score.innerHTML=scoreCount;
+                }
+            }
+            if(user == 2){
+                if(comp == 3){
+                 document.getElementById("result").innerHTML="You Lose!!";
+                 loseSound.play();
+                }
+                else if (comp == 1){
+                document.getElementById("result").innerHTML="You Win!";
+                cheerSound.play();
+                scoreCount++;score.innerHTML=scoreCount;
+                }
+            }
+            if(user == 3){
+                if(comp == 1){
+                 document.getElementById("result").innerHTML="You Lose!!"
+                 loseSound.play();;
+                }
+                else if (comp == 2){
+                document.getElementById("result").innerHTML="You Win!";
+                cheerSound.play();
+                scoreCount++;score.innerHTML=scoreCount;
+                }
+            }
+
+        }
+
+
+        document.getElementById("id1").onclick=function(){
+            document.getElementById("userres").value=1;
+            check();
+            document.getElementById("userres").value="Rock";
+            document.getElementById("ur").classList.add("fa-hand-back-fist");
+            document.getElementById("ur").classList.remove("fa-hand","fa-hand-peace");
+            matchCount++;match.innerHTML = matchCount;
+        }
+        document.getElementById("id2").onclick=function(){
+            document.getElementById("userres").value=2;
+            check();
+            document.getElementById("userres").value="Paper";
+            document.getElementById("ur").classList.add("fa-hand");
+            document.getElementById("ur").classList.remove("fa-hand-back-fist","fa-hand-peace");
+            matchCount++;match.innerHTML = matchCount;
+        }
+        document.getElementById("id3").onclick=function(){
+            document.getElementById("userres").value=3;
+            check();
+            document.getElementById("userres").value="Scissor";
+            document.getElementById("ur").classList.add("fa-hand-peace");
+            document.getElementById("ur").classList.remove("fa-hand-back-fist","fa-hand");
+            matchCount++;match.innerHTML = matchCount;
+        }
+        
+    </script>
+    <script src="https://kit.fontawesome.com/fd2dea6462.js" crossorigin="anonymous"></script>
+</html>
